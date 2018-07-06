@@ -2,10 +2,12 @@ import os
 from flask import Flask, render_template
 from flask_nav import Nav
 from flask_nav.elements import Subgroup, Link, View, Text, Navbar, Separator, Navbar
+from app.main._2organisation import OrganisationSearchForm
 
 template_dir = os.path.abspath('app/templates')
 
 app = Flask(__name__, template_folder=template_dir)
+app.secret_key = 'development key'
 nav = Nav(app)
 
 nav.register_element('my_navbar', Navbar(
@@ -21,7 +23,8 @@ def index():
 
 @app.route('/organisation')
 def organisation():
-	return render_template('organisation.html')
+	form = OrganisationSearchForm()
+	return render_template('organisation.html',form=form)
 
 @app.route('/contacts')
 def contacts():
