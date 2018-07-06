@@ -1,8 +1,66 @@
-<html>
-<body>
-	{{ nav.my_navbar.render() }}
-	<h1>
-		This is the organisation page
-	</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="wrapper">
+  <link rel="stylesheet" type = "text/css" href="{{url_for('static', filename='_sidebar.css')}}">
+  <!--{{ navdata }}-->
+  {% include "nav.html" %}
+
+    <!-- Page Content  -->
+    <div id="content">
+        <div>
+            <form>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class = "col-md-6">
+                            {{ form.org.label }}
+                        </div>
+                        {{ form.org }}
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class = "col-md-6">
+                            {{ form.employee.label }}
+                        </div>
+                        {{ form.employee }}
+                    </div>
+                </div><br>
+
+
+
+                <div class="row">
+                    <div class="col-sm-6" >
+                        <div class = "col-md-6">
+                            {{ form.revenue.label }}
+                        </div>
+                        {{ form.revenue }}
+                    </div>
+                    <div class="col-sm-6">
+                        <div class = "col-md-6">
+                            {{ form.region.label }}
+                        </div>
+                        {{ form.region }}
+                    </div>
+                </div><br>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class = "col-md-6">
+                            {{ form.exist_customer.label }}
+                        </div>
+                        {{ form.exist_customer }}
+                    </div>
+                    <div class="col-sm-6">
+                        <div class = "col-md-6">
+                            {{ form.industry.label }}
+                        </div>
+                        {{ form.industry }}
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+     </div>
+</div>
+{% endblock %}

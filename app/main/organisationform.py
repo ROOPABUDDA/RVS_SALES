@@ -1,9 +1,9 @@
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import TextField, IntegerField, TextAreaField, SubmitField, RadioField, SelectField
 
 from wtforms import validators, ValidationError
 
-class OrganisationSearchForm(Form):
+class OrganisationSearchForm(FlaskForm):
    org = TextField("Organisation",[validators.Required("Please enter organisation name.")])
    revenue = TextField("Revenue")
    employee = TextField("Employee")
