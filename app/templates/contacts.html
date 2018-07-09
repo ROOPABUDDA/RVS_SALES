@@ -8,9 +8,102 @@
 
     <!-- Page Content  -->
     <div id="content">
-        This is the contacts page
+        <div>
+            <form action="/submit_contacts">
+            	<legend>Contacts</legend>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class = "col">
+                            <div class=row>
+                                <div class="col">
+                                    {{ form.emp_name.label }}
+                                </div>
+                                <div class="col">
+                                    {{ form.emp_name }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class = "col">
+                            <div class=row>
+                                <div class="col">
+                                    {{ form.emp_organisation.label }}
+                                </div>
+                                <div class="col">
+                                    {{ form.emp_organisation }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+
+                <div class="row">
+                    <div class="col-sm-6" >
+                        <div class = "col">
+                            <div class="row">
+                                <div class="col">
+                                    {{ form.emp_designation.label }}
+                                </div>
+                                <div class="col">
+                                    {{ form.emp_designation }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class = "col">
+                            <div class="row">
+                                <div class="col">
+                                    {{ form.emp_location.label }}
+                                </div>
+                                <div class="col">
+                                    {{ form.emp_location }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class = "col">
+                            <div class=row>
+                                <div class="col">
+                                    {{ form.emp_linkedin.label }}
+                                </div>
+                                <div class="col">
+                                    {{ form.emp_linkedin }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class = "col">
+                            <div class="row">
+                                <div  class="col">
+                                    {{ form.emp_decisionpower.label }}
+                                </div>
+                            <div class="col">
+                                {{ form.emp_decisionpower }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="float-right col-md-5">
+                    <button id = "upload_contacts" type="submit" class="btn action"><i class="fa fa-upload"></i> Upload</button>
+                    <button id = "download_contacts" type="submit" class="btn action"><i class="fa fa-download "></i> Download</button>
+                    <button id = search_contacts" type="submit" class="btn pull-right action"><i class="fa f54a"></i> Search</button>
+                </div>
+
+            </form>
+        </div>
+
      </div>
 </div>
-{% endblock %}
 
+<script src="{{url_for('static', filename='organisation.js')}}"></script>
+
+{% endblock %}
 

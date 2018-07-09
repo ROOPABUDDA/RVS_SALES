@@ -13,5 +13,3 @@ class OrganisationSearchForm(FlaskForm):
       ('IT', 'Information Technology'),
       ('insurance', 'Insurance'),
       ('agriculture','Agriculture')])
-
-   submit_search = SubmitField("Search")

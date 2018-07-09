@@ -190,6 +190,11 @@ a.article:hover {
     color: #fff !important;
 }
 
+.btn-download
+{
+    background: #EEE8AA !important;
+    color: #fff !important;
+}
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */

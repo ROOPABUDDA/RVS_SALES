@@ -1,8 +1,15 @@
-<html>
-<body>
-	{{ nav.my_navbar.render() }}
-	<h1>
-		This is the index page
-	</h1>
-</body>
-</html>
+
+
+{% extends 'dashboard.html' %}
+
+{% block body %}
+<div class="wrapper">
+  <link rel="stylesheet" type = "text/css" href="{{ url_for('static', filename='_sidebar.css') }}">
+  {% include "nav.html" %}
+
+    <!-- Page Content  -->
+    <div id="content">
+        This is the index page
+     </div>
+</div>
+{% endblock %}
