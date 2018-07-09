@@ -16,13 +16,8 @@ def home():
         return render_template('login.html')
     else:
         return render_template('home.html')
-        # return "Hello Boss! <a href='/logout'>Logout</a>"
-"""
-@app.route('/')
-def index():
-	# keep login here
-	return render_template('index.html')
-"""
+
+
 @app.route('/login', methods=['POST'])
 def do_admin_login():
     if request.form['password'] == 'password' and request.form['username'] == 'admin':
@@ -31,12 +26,7 @@ def do_admin_login():
         flash('wrong password!')
     return home()
 
-"""
-@app.route('/login')
-def login():
-	# keep login here
-	return render_template('login.html')
-"""
+
 @app.route("/dashboard")
 def dash():
     return render_template("dashboard.html")
@@ -64,7 +54,7 @@ def analytics():
     return render_template('analytics.html')
 
 
-@app.route('/submit_organisation')#,method=['POST'])
+@app.route('/submit_organisation')
 def submit_organisation():
 	print("sample text print")
 	forward_message = "Moving Forward..."
