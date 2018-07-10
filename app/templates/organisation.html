@@ -1,10 +1,9 @@
-{% extends 'base.html' %}
-
-{% block body %}
+{% extends 'base.html' %} {% block body %}
 <div class="wrapper">
-  <link rel="stylesheet" type = "text/css" href="{{url_for('static', filename='_sidebar.css')}}">
-  <!--{{ navdata }}-->
-  {% include "nav.html" %}
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='_sidebar.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/organization.css')}}">
+    <!--{{ navdata }}-->
+    {% include "nav.html" %}
 
     <!-- Page Content  -->
     <div id="content">
@@ -13,7 +12,7 @@
                 <legend>Organisations</legend>
                 <div class="row">
                     <div class="col-sm-6">
-                        <div class = "col">
+                        <div class="col">
                             <div class=row>
                                 <div class="col">
                                     {{ form.org.label }}
@@ -25,7 +24,7 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class = "col">
+                        <div class="col">
                             <div class=row>
                                 <div class="col">
                                     {{ form.employee.label }}
@@ -36,11 +35,12 @@
                             </div>
                         </div>
                     </div>
-                </div><br>
+                </div>
+                <br>
 
                 <div class="row">
-                    <div class="col-sm-6" >
-                        <div class = "col">
+                    <div class="col-sm-6">
+                        <div class="col">
                             <div class="row">
                                 <div class="col">
                                     {{ form.revenue.label }}
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class = "col">
+                        <div class="col">
                             <div class="row">
                                 <div class="col">
                                     {{ form.region.label }}
@@ -63,11 +63,12 @@
                             </div>
                         </div>
                     </div>
-                </div><br>
+                </div>
+                <br>
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <div class = "col">
+                        <div class="col">
                             <div class=row>
                                 <div class="col">
                                     {{ form.exist_customer.label }}
@@ -79,28 +80,71 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class = "col">
+                        <div class="col">
                             <div class="row">
-                                <div  class="col">
+                                <div class="col">
                                     {{ form.industry.label }}
                                 </div>
-                            <div class="col">
-                                {{ form.industry }}</div>
+                                <div class="col">
+                                    {{ form.industry }}</div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <br>
                 <div class="float-right col-md-5">
-                    <button id = "upload_org" type="submit" class="btn action"><i class="fa fa-upload"></i> Upload</button>
-                    <button id = "download_org" type="submit" class="btn action"><i class="fa fa-download "></i> Download</button>
-                    <button id = search_org" type="submit" class="btn pull-right action"><i class="fa f54a"></i> Search</button>
+                    <button id="upload_org" type="submit" class="btn action">
+                        <i class="fa fa-upload"></i> Upload</button>
+                    <button id="download_org" type="submit" class="btn action">
+                        <i class="fa fa-download "></i> Download</button>
+                    <button id="search_org" type="submit" class="btn pull-right action">
+                        <i class="fa f54a"></i> Search</button>
+                </div>
+
+                <br>
+                <br>
+                <br>
+                <div>
+                    <table id="customers">
+                        <tr>
+                            <th>Name</th>
+                            <th>Revenue</th>
+                            <th>Employee count</th>
+                            <th>Region</th>
+                            <th>Industry</th>
+                        </tr>
+                        <tr>
+                            <td>RapidValue</td>
+                            <td>100M</td>
+                            <td>500</td>
+                            <td>Kochi</td>
+                            <td>Information Technology<button id="edit_org" type="submit" class="btn action">
+                         <i class="fas fa-pencil-alt"></i></button>
+                                <button id="del_org" type="submit" class="btn action">
+                        <i class="fas fa-trash-alt"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>RapidValue</td>
+                            <td>10M</td>
+                            <td>200</td>
+                            <td>US</td>
+                            <td>Information Technology</td>
+                        </tr>
+                        <tr>
+                            <td>RapidValue3</td>
+                            <td>100M</td>
+                            <td>250</td>
+                            <td>Germany</td>
+                            <td>Information Technology</td>
+                        </tr>
+                    </table>
                 </div>
 
             </form>
         </div>
 
-     </div>
+    </div>
 </div>
 
 <script src="{{url_for('static', filename='organisation.js')}}"></script>
