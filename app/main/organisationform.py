@@ -13,3 +13,6 @@ class OrganisationSearchForm(FlaskForm):
       ('IT', 'Information Technology'),
       ('insurance', 'Insurance'),
       ('agriculture','Agriculture')])
+   upload_org = SubmitField("Upload")
+   download_org = SubmitField("Download")
+   search_org = SubmitField("Search")

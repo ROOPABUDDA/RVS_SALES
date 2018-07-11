@@ -8,7 +8,11 @@
     <!-- Page Content  -->
     <div id="content">
         <div>
-            <form action="/submit_organisation">
+            <div class="float-right">
+            Welcome , user name
+            <a href='/logout' class="button">Logout</a>
+            </div>
+            <form><!-- action="/submit_organisation" method="POST"-->
                 <legend>Organisations</legend>
                 <div class="row">
                     <div class="col-sm-6">
@@ -147,6 +151,7 @@
     </div>
 </div>
 
-<script src="{{url_for('static', filename='organisation.js')}}"></script>
+<!--script src="{{ url_for('static', filename='js/resources/file.js') }}"></script-->
+
 
 {% endblock %}

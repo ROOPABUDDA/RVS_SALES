@@ -8,8 +8,18 @@
 
     <!-- Page Content  -->
     <div id="content">
-    	 <a href='/logout' class="button">Logout</a>
-     </div>
+    	 <a href='/logout' class="button float-right">Logout</a>
+    	 <h2>
+    	 	Upload your file here(.xls format only)
+    	 </h2>
+    	 <div>
+	    	  <form action = "upload_file" method = "POST"
+	         enctype = "multipart/form-data">
+	         <input type = "file" name = "file" />
+	         <input type = "submit"/>
+	      </form>
+	     </div>
+	 </div>
 </div>
 
 <script src="{{url_for('static', filename='organisation.js')}}"></script>

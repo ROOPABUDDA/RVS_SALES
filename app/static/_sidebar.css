@@ -61,7 +61,6 @@ span {
 }
 
 #sidebar {
-    min-width: 250px;
     max-width: 250px;
     background: #7386D5;
     color: #fff;
@@ -134,9 +133,50 @@ span {
     display: block;
 }
 
-#sidebar ul li a:hover {
+#sidebar ul li a:hover .tooltiptext{
     color: #7386D5;
     background: #fff;
+    visibility: visible;
+}
+
+.tooltipolddelete {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+.tooltip {
+    position: relative;
+    cursor: context-menu;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 10px;
+    color: #FFF;
+    opacity: 1;
+}
+.tooltip .tooltip-text {
+
+}
+#sidebar ul li a .tooltip-text {
+    visibility: hidden;
+    position: absolute;
+    border-radius: 5px;
+    display: none;
+    background-color: #005eeb;
+    border: 1px solid #005eeb;
+    padding: 5px;
+    width: 100px;
+    text-align: center;
+    z-index: 10;
+    top: calc(100% + 8px);
+    right: -8px;
+    box-shadow: 0 0px 2px 0px rgba(0, 0, 0, 1);
+    color: #fff;
+    opacity: 1;
+    z-index: 9;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
 }
 
 #sidebar ul li a i {
