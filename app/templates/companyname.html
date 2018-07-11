@@ -1,0 +1,90 @@
+{% extends 'base.html' %} {% block body %}
+<div class="wrapper">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='_sidebar.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/companyname.css')}}">
+    <!--{{ navdata }}-->
+    {% include "nav.html" %}
+
+    <!-- Page Content  -->
+    <div id="content">
+        <div class="col-sm-8">
+            <div class="col">
+                <div class=row>
+                    <div class="col">
+                        <h4>RapidValue</h4>
+                        <!-- <br> -->
+                        https://www.rapidvaluesolutions.com/
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-3">$X million </div>
+            <div class="col-sm-3">550 Employees</div>
+            <div class="col-sm-3">Key Contacts
+                <div class="row">
+                    <div class="col">
+                        <li>Rinish</li>
+                        <li>Sirish</li>
+                        <li>Rinish</li>
+                        <li>Sirish</li>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">Time required for response</div>
+        </div>
+
+        <div>
+            <table id="customers">
+                <tr>
+                    <th>Name</th>
+                    <th>Organization</th>
+                    <th>Designation</th>
+                    <th>Location</th>
+                    <th>Decision Power</th>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="/companyname">Rinish</a>
+                    </td>
+                    <td>RapidValue</td>
+                    <td>CTO</td>
+                    <td>Kochi</td>
+                    <td>Yes
+                        <button id="edit_org" type="submit" class="btn action">
+              <i class="fas fa-pencil-alt"></i>
+            </button>
+                        <button id="del_org" type="submit" class="btn action">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Sirish</td>
+                    <td>RapidVale</td>
+                    <td>CFO</td>
+                    <td>US</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>Rakesh</td>
+                    <td>RapidVale</td>
+                    <td>CEO</td>
+                    <td>Germany</td>
+                    <td>Yes</td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div class="float-right col-md-3">
+            <button id="upload_org" type="submit" class="btn action">
+        <i class="fas fa-check"></i>Verify LinkedIn</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
