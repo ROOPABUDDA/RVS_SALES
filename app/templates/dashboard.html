@@ -1,17 +1,109 @@
-{% extends 'base.html' %}
-
-{% block body %}
+{% extends 'base.html' %} {% block body %}
 <div class="wrapper">
-  <link rel="stylesheet" type = "text/css" href="{{url_for('static', filename='_sidebar.css')}}">
-  <!--{{ navdata }}-->
-  {% include "nav.html" %}
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='_sidebar.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/dashboard.css')}}">
+    <!--{{ navdata }}-->
+    {% include "nav.html" %}
 
     <!-- Page Content  -->
     <div id="content">
-       sample text
-       <button>
-       <a href='/logout' class="button float-right">Logout</a>
-       </button>
-     </div>
+        <div class="row">
+            <div class="col">
+
+
+                <div class="dashboard">
+
+                    <div class="details">
+                        16 Organizations
+                        <div class="left col-md-3">
+                            <button id="upload_org" type="submit" class="btn action">
+                                <i class="fas fa-plus"></i> Add</button>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--  <div class="col"></div> -->
+            <div class="float-right col">
+
+
+                <div class="dashboard">
+
+                    <div class="details">
+
+                        198 Contacts
+                        <div class="left col-md-3">
+                            <button id="upload_org" type="submit" class="btn action">
+                                <i class="fas fa-plus"></i> Import</button>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <hr>
+        <div class="row">
+<div class="search-container">
+            <div id="companyname"><input class="form-control" id="myInputcompanyname" type="text" placeholder="Company Name"> </div>
+            <div id="industry"><input class="form-control" id="myInputindustry" type="text" placeholder="Industry"> </div>
+            <div  id="geography"><input class="form-control" id="myInputgeography" type="text" placeholder="Geography"> </div>
+            <div id="revenue"><input class="form-control" id="myInputrevenue" type="text" placeholder="Revenue"> </div>
+            <div  id="tag"><input class="form-control" id="myInputtag" type="text" placeholder="Tags"> </div>
+            <!--  <div class="col-sm-4"  id="searchbar"><input class="form-control" id="myInput" type="text" placeholder="Search.."> </div> -->
+
+            
+            <div class="search-button">
+                <button id="upload_org" type="submit" class="btn action">
+        <i class="fas fa-search"></i>Search</button>
+            </div></div>
+            <div class="search-table-container">
+            <table id="customers">
+                <tr>
+                    <th>Name</th>
+                    <th>Revenue</th>
+                    <th>Employee count</th>
+                    <th>Region</th>
+                    <th>Industry</th>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="/companyname">RapidValue</a>
+                    </td>
+                    <td>100M</td>
+                    <td>500</td>
+                    <td>Kochi</td>
+                    <td>Information Technology
+                        <button id="edit_org" type="submit" class="btn action">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                        <button id="del_org" type="submit" class="btn action">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>RapidValue</td>
+                    <td>10M</td>
+                    <td>200</td>
+                    <td>US</td>
+                    <td>Information Technology</td>
+                </tr>
+                <tr>
+                    <td>RapidValue3</td>
+                    <td>100M</td>
+                    <td>250</td>
+                    <td>Germany</td>
+                    <td>Information Technology</td>
+                </tr>
+            </table>
+        </div>
+
+        </div><br>
+        
+    </div>
 </div>
 {% endblock %}

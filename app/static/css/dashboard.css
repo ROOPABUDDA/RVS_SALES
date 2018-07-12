@@ -1,0 +1,61 @@
+#customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #7386D5;
+    color: white;
+}
+
+.details{
+    font-size: 2rem;
+}
+
+#upload_org{
+    width: 8rem;
+}
+
+#companyname {
+    padding-bottom: 1rem;
+
+}
+ #industry{
+ padding-bottom: 1rem;
+
+}
+ #geography{
+ padding-bottom: 1rem;
+
+}
+ #revenue{
+ padding-bottom: 1rem;
+
+} 
+#tag{
+ padding-bottom: 1rem;
+
+}
+.search-container{
+    width: 15%;
+}
+.search-table-container{
+    width: 83%;
+    padding-left: 2%
+}
+.search-button #upload_org{
+    width: 100%
+}
