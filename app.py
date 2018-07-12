@@ -82,6 +82,12 @@ def create_table(filename):
         return "Table: " + table_name + " created successfully"
     except Exception as e:
         return str(e)
+def insert_into_table(filename):
+    global dataframe1
+    print("filename")
+    print(filename)
+    print(dataframe1)
+    return True
 
 @app.route('/')
 def home():
@@ -112,6 +118,7 @@ def logout():
 @app.route("/upload_file",methods=['POST'])
 def upload_file():
     global dataframe1
+    global file_name
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -131,6 +138,10 @@ def upload_file():
             getfile(filename)
             result = create_table(filename)
             print("inserting into db tabel now")
+
+            # ............work her
+            # parameters are filename and the global dataframe
+            table_result = insert_into_table(file_name)
             print(dataframe1)
             # insert_db(dataframe1)
             conn = database.connect()
@@ -139,11 +150,10 @@ def upload_file():
             for index, row in dataframe1.iterrows():
                 print(index)
                 print(row)
-            # dataframe1.to_sql(filename,conn)
-            # sql.write_frame(dataframe1, con=cursor, name=filename, if_exists='append', flavor='mysql')
             print(result)
             # redirect(url_for('create_table', filename=filename))
-            return "File uploaded successfully"
+            return render_template('home.html')
+            #"File uploaded successfully"
             # redirect(url_for('uploaded_file', filename=filename))
 
     return render_template('home.html')
@@ -166,7 +176,7 @@ def analytics():
 @app.route('/companyname')
 def companyname():
     return render_template('companyname.html')
-
+"""
 @app.route('/submit_organisation')
 def submit_organisation():
     if request.method == 'POST':
@@ -182,5 +192,5 @@ def submit_organisation():
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
-     app.run(debug=True,host='0.0.0.0', port=4000)
-    # app.run(debug=True) 
+    app.run(debug=True,host='0.0.0.0', port=4000)
+    # app.run(debug=True)
