@@ -90,7 +90,7 @@ def insert_into_table(filename):
     return True
 
 @app.route('/')
-def home():
+def login():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
@@ -176,6 +176,12 @@ def analytics():
 @app.route('/companyname')
 def companyname():
     return render_template('companyname.html')
+
+@app.route('/home')
+def home():
+    return render_template('home.html')
+
+
 """
 @app.route('/submit_organisation')
 def submit_organisation():
