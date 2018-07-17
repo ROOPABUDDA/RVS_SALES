@@ -12,7 +12,7 @@ from app.main.contacts import contactSearchForm
 template_dir = os.path.abspath('app/templates')
 static_path = os.path.abspath('app/static')
 UPLOAD_FOLDER = '/home/roopa/others/RVS/internals/RVS_SALES/uploads'
-DOWNLOAD_FOLDER = '/home/roopa/others/RVS/internals/RVS_SALES/downloads'
+DOWNLOAD_FILE = '/home/roopa/others/RVS/internals/RVS_SALES/downloads/output.xls'
 ALLOWED_EXTENSIONS = set(['csv', 'xlsx', 'xls'])
 
 app = Flask(__name__, template_folder=template_dir, static_folder=static_path)
@@ -188,47 +188,52 @@ def contacts():
         contact_geography = request.form['emp_geography']
         print(contact_name)
         print(contact_job_title)
+        print(form.submit_emp_search.data)
+        print(form.submit_emp_download.data)
         # add code her to searc for specific column in the given dataframe
         #print(dataframe1.loc[dataframe1['HQ Country'] == contact_geography])
         #dataframe_search = dataframe1.loc[dataframe1['HQ Country'] == contact_geography]
-        dataframe_search = dataframe1
-        if(contact_name != ""):
-            dataframe_search = dataframe1.loc[dataframe1['First Name'] == contact_name]
+        if(form.submit_emp_search.data):
+            dataframe_search = dataframe1
+            if(contact_name != ""):
+                dataframe_search = dataframe1.loc[dataframe1['First Name'] == contact_name]
 
-        if(contact_job_title != ""):
-            dataframe_search = dataframe_search.loc[dataframe_search['Job Title'] == contact_job_title]
+            if(contact_job_title != ""):
+                dataframe_search = dataframe_search.loc[dataframe_search['Job Title'] == contact_job_title]
 
-        if(contact_company_name != ""):
-            dataframe_search = dataframe_search.loc[dataframe_search['Company Name'] == contact_company_name]
+            if(contact_company_name != ""):
+                dataframe_search = dataframe_search.loc[dataframe_search['Company Name'] == contact_company_name]
 
-        if(contact_job_function != ""):
-            dataframe_search = dataframe_search.loc[dataframe_search['Job Title'] == contact_job_title]
+            if(contact_job_function != ""):
+                dataframe_search = dataframe_search.loc[dataframe_search['Job Title'] == contact_job_title]
 
-        if(contact_mgmt_level != ""):
-            dataframe_search = dataframe_search.loc[dataframe_search['Job Title'] == contact_job_title]
+            if(contact_mgmt_level != ""):
+                dataframe_search = dataframe_search.loc[dataframe_search['Job Title'] == contact_job_title]
 
-        if(contact_industry != ""):
-            dataframe_search = dataframe_search.loc[dataframe_search['Primary Industry'] == contact_industry]
+            if(contact_industry != ""):
+                dataframe_search = dataframe_search.loc[dataframe_search['Primary Industry'] == contact_industry]
 
-        if(contact_geography != ""):
-            dataframe_search = dataframe_search.loc[dataframe_search['HQ Country'] == contact_geography]
+            if(contact_geography != ""):
+                dataframe_search = dataframe_search.loc[dataframe_search['HQ Country'] == contact_geography]
 
-        dftest = dataframe_search.iloc[:, 0:10]
-        print(dftest)
+            dftest = dataframe_search.iloc[:, 0:10]
+            print(dftest)
 
-        with open(test_file, 'w') as f:
-                print("creating file here")
-                f.write(dftest.to_html(classes='df'))
-    if request.method == 'PATCH':
-        # global dataframe1
-        # global dftest
-        #download file here
-        #with open(download_file,'w') as f:dataframe
-        writer = pd.ExcelWriter(DOWNLOAD_FOLDER+'/output.xlsx')
-        print("writer her is ")
-        print(writer)
-        dftest.to_excel(writer,'Sheet1')
-        #return render_template('contacts.html', form=form)
+            with open(test_file, 'w') as f:
+                    print("creating file here")
+                    f.write(dftest.to_html(classes='df'))
+        if(form.submit_emp_download.data):
+            print(dftest)
+            #if request.method == 'PATCH':
+            # global dataframe1
+            # global dftest
+            #download file here
+            #with open(download_file,'w') as f:dataframe
+            writer = pd.ExcelWriter(DOWNLOAD_FILE, engine='xlsxwriter')
+            print("writer her is ")
+            print(writer)
+            dftest.to_excel(writer,'Sheet1')
+            return render_template('contacts.html', form=form)
 
     return render_template('contacts.html', form=form)
 
