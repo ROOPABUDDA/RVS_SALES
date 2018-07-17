@@ -32,7 +32,7 @@ test_file = "/home/roopa/others/RVS/internals/RVS_SALES/app/templates/test.html"
 file_list = []
 col_name = []
 file_name = ""
-
+df = pd.DataFrame()
 # Code to read data from excel file into pandas:
 
 #file_name = file_name.split("/")[-1].split(".")[0]
@@ -40,6 +40,7 @@ file_name = ""
 def getfile(filename):
     global file_name
     global dataframe1
+    global df
     for each in glob.glob(file_type):
         file_list.append(each)
     print("printing filelist in get file")
@@ -47,8 +48,10 @@ def getfile(filename):
     for each in file_list:
         file_name = each.split("/")[-1].split(".")[0]
         dataframe1 = pd.read_excel(each)
+        df=df.append(dataframe1)
         col_name.append(dataframe1.columns.values)
         print(col_name)
+    df.drop_duplicates(subset=None, keep="first", inplace=True)
 
 def db_colname(pandas_colname):
     """Convert pandas column name to a DBMS column name.
@@ -134,30 +137,30 @@ def upload_file():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             print("store to database")
-            #check this part if the below function is called
+            # #check this part if the below function is called
             getfile(filename)
-            result = create_table(filename)
-            print("inserting into db tabel now")
+            # result = create_table(filename)
+            # print("inserting into db tabel now")
 
-            # ............work her
-            # parameters are filename and the global dataframe
-            table_result = insert_into_table(file_name)
-            #print(dataframe1)
-            # insert_db(dataframe1)
-            conn = database.connect()
-            cursor = conn.cursor()
-            # print(col_name)
-            # for index, row in dataframe1.iterrows():
-            #     print(index)
-            #     print(row)
-            # print(result)
-            #dftest = dataframe1.iloc[:, 0:10]
-            #print(dftest)
-            #print(dataframe1.iloc[:, :])
-            # redirect(url_for('create_table', filename=filename))
-            # with open(test_file, 'w') as f:
-            #     print("creating file here")
-            #     f.write(dftest.to_html(classes='df'))
+            # # ............work her
+            # # parameters are filename and the global dataframe
+            # table_result = insert_into_table(file_name)
+            # #print(dataframe1)
+            # # insert_db(dataframe1)
+            # conn = database.connect()
+            # cursor = conn.cursor()
+            # # print(col_name)
+            # # for index, row in dataframe1.iterrows():
+            # #     print(index)
+            # #     print(row)
+            # # print(result)
+            # #dftest = dataframe1.iloc[:, 0:10]
+            # #print(dftest)
+            # #print(dataframe1.iloc[:, :])
+            # # redirect(url_for('create_table', filename=filename))
+            # # with open(test_file, 'w') as f:
+            # #     print("creating file here")
+            # #     f.write(dftest.to_html(classes='df'))
 
             return render_template('home.html')
             #"File uploaded successfully"
@@ -174,6 +177,7 @@ def organisation():
 def contacts():
     global dataframe1
     global dftest
+    global df
 
     form = contactSearchForm(request.form)
     if request.method == 'POST':
@@ -190,13 +194,16 @@ def contacts():
         print(contact_job_title)
         print(form.submit_emp_search.data)
         print(form.submit_emp_download.data)
+        print(df)
+        print(df.drop_duplicates(subset=None, keep="first", inplace=True))
         # add code her to searc for specific column in the given dataframe
         #print(dataframe1.loc[dataframe1['HQ Country'] == contact_geography])
         #dataframe_search = dataframe1.loc[dataframe1['HQ Country'] == contact_geography]
         if(form.submit_emp_search.data):
-            dataframe_search = dataframe1
+            dataframe_search = df.drop_duplicates(subset=['First Name', 'Last Name', 'Job Title',
+                'Company Name', 'Primary Industry'], keep="first", inplace=False)
             if(contact_name != ""):
-                dataframe_search = dataframe1.loc[dataframe1['First Name'] == contact_name]
+                dataframe_search = dataframe_search.loc[dataframe_search['First Name'] == contact_name]
 
             if(contact_job_title != ""):
                 dataframe_search = dataframe_search.loc[dataframe_search['Job Title'] == contact_job_title]
