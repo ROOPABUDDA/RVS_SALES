@@ -1,5 +1,13 @@
 * {
 box-sizing: border-box;
+width: 150px;
+height: 30px;
+}
+
+*, ::after, ::before {
+    box-sizing: border-box;
+    width: 150px;
+    height: 30px;
 }
 
 *:focus {
@@ -75,4 +83,56 @@ box-shadow: none;
   color: #444;
   display: block;
 	margin-top: 12px;
+}
+
+#contacts {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#contacts td, #contacts th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#contacts th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #7386D5;
+  color: white;
+}
+
+.search-container{
+  width: 5%;
+}
+
+.search-table-container{
+  width: 83%;
+  padding-left: 2%
+}
+
+#emp_name {
+  padding-bottom: 1rem;
+}
+
+#emp_organisation {
+  padding-bottom: 1rem;
+}
+
+#emp_designation {
+  padding-bottom: 1rem;
+}
+
+#emp_location {
+  padding-bottom: 1rem;
+}
+
+#emp_linkedin {
+  padding-bottom: 1rem;
+}
+
+#emp_decisionpower {
+  padding-bottom: 1rem;
 }
