@@ -117,22 +117,26 @@ box-shadow: none;
   padding-bottom: 1rem;
 }
 
-#emp_organisation {
+#emp_job_title {
   padding-bottom: 1rem;
 }
 
-#emp_designation {
+#emp_company_name {
   padding-bottom: 1rem;
 }
 
-#emp_location {
+#emp_job_function {
   padding-bottom: 1rem;
 }
 
-#emp_linkedin {
+#emp_mgmt_level {
   padding-bottom: 1rem;
 }
 
-#emp_decisionpower {
+#emp_industry {
+  padding-bottom: 1rem;
+}
+
+#emp_geography {
   padding-bottom: 1rem;
 }

@@ -12,6 +12,7 @@ from app.main.contacts import contactSearchForm
 template_dir = os.path.abspath('app/templates')
 static_path = os.path.abspath('app/static')
 UPLOAD_FOLDER = '/home/roopa/others/RVS/internals/RVS_SALES/uploads'
+DOWNLOAD_FOLDER = '/home/roopa/others/RVS/internals/RVS_SALES/downloads'
 ALLOWED_EXTENSIONS = set(['csv', 'xlsx', 'xls'])
 
 app = Flask(__name__, template_folder=template_dir, static_folder=static_path)
@@ -150,13 +151,13 @@ def upload_file():
             #     print(index)
             #     print(row)
             # print(result)
-            dftest = dataframe1.iloc[:, 0:10]
-            print(dftest)
+            #dftest = dataframe1.iloc[:, 0:10]
+            #print(dftest)
             #print(dataframe1.iloc[:, :])
             # redirect(url_for('create_table', filename=filename))
-            with open(test_file, 'w') as f:
-                print("creating file here")
-                f.write(dftest.to_html(classes='df'))
+            # with open(test_file, 'w') as f:
+            #     print("creating file here")
+            #     f.write(dftest.to_html(classes='df'))
 
             return render_template('home.html')
             #"File uploaded successfully"
@@ -169,10 +170,67 @@ def organisation():
     form = OrganisationSearchForm()
     return render_template('organisation.html', form=form)
 
-@app.route('/contacts')
+@app.route('/contacts', methods=['GET', 'POST'])
 def contacts():
-	form = contactSearchForm()
-	return render_template('contacts.html', form=form)
+    global dataframe1
+    global dftest
+
+    form = contactSearchForm(request.form)
+    if request.method == 'POST':
+        # global dataframe1
+        # global dftest
+        contact_name = request.form['emp_name']
+        contact_job_title = request.form['emp_job_title']
+        contact_company_name = request.form['emp_company_name']
+        contact_job_function = request.form['emp_job_function']
+        contact_mgmt_level =request.form['emp_mgmt_level']
+        contact_industry = request.form['emp_industry']
+        contact_geography = request.form['emp_geography']
+        print(contact_name)
+        print(contact_job_title)
+        # add code her to searc for specific column in the given dataframe
+        #print(dataframe1.loc[dataframe1['HQ Country'] == contact_geography])
+        #dataframe_search = dataframe1.loc[dataframe1['HQ Country'] == contact_geography]
+        dataframe_search = dataframe1
+        if(contact_name != ""):
+            dataframe_search = dataframe1.loc[dataframe1['First Name'] == contact_name]
+
+        if(contact_job_title != ""):
+            dataframe_search = dataframe_search.loc[dataframe_search['Job Title'] == contact_job_title]
+
+        if(contact_company_name != ""):
+            dataframe_search = dataframe_search.loc[dataframe_search['Company Name'] == contact_company_name]
+
+        if(contact_job_function != ""):
+            dataframe_search = dataframe_search.loc[dataframe_search['Job Title'] == contact_job_title]
+
+        if(contact_mgmt_level != ""):
+            dataframe_search = dataframe_search.loc[dataframe_search['Job Title'] == contact_job_title]
+
+        if(contact_industry != ""):
+            dataframe_search = dataframe_search.loc[dataframe_search['Primary Industry'] == contact_industry]
+
+        if(contact_geography != ""):
+            dataframe_search = dataframe_search.loc[dataframe_search['HQ Country'] == contact_geography]
+
+        dftest = dataframe_search.iloc[:, 0:10]
+        print(dftest)
+
+        with open(test_file, 'w') as f:
+                print("creating file here")
+                f.write(dftest.to_html(classes='df'))
+    if request.method == 'PATCH':
+        # global dataframe1
+        # global dftest
+        #download file here
+        #with open(download_file,'w') as f:dataframe
+        writer = pd.ExcelWriter(DOWNLOAD_FOLDER+'/output.xlsx')
+        print("writer her is ")
+        print(writer)
+        dftest.to_excel(writer,'Sheet1')
+        #return render_template('contacts.html', form=form)
+
+    return render_template('contacts.html', form=form)
 
 
 @app.route('/analytics')

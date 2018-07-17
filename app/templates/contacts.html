@@ -10,7 +10,7 @@
     <div id="content">
         <div class="row float-left">
             <hr>
-            <form action="/submit_contacts">
+            <form action="/contacts" method='post'>
             	<legend>Contacts</legend>
                 <div class="row">
                     <div class="search-container">
@@ -36,7 +36,13 @@
                         <div id = "emp_geography">
                             {{ form.emp_geography }}
                         </div>
-                        <div class="search-button">
+                        <div id = submit_emp>
+                            {{ form.submit_emp_search }}
+                        </div>
+                        <div id = submit_emp_import>
+                            {{ form.submit_emp_download }}
+                        </div>
+                        <!--div class="search-button">
                             <button
                             id="upload_contact"
                             type="submit"
@@ -45,10 +51,15 @@
                             </i>
                             Search
                             </button>
-                        </div>
+                        </div-->
                     </div>
                 </div>
             </form>
+            <!--form action="/contacts" method='patch'>
+                <div id = submit_emp_import>
+                            {{ form.submit_emp_download }}
+                        </div>
+            </form-->
         </div>
 
             <div class="search-table-container">
