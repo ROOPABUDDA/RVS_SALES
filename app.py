@@ -27,7 +27,7 @@ database = MySQL()
 database.init_app(app)
 
 file_type = "/home/roopa/others/RVS/internals/RVS_SALES/uploads/*.xls"
-
+test_file = "/home/roopa/others/RVS/internals/RVS_SALES/app/templates/test.html"
 file_list = []
 col_name = []
 file_name = ""
@@ -47,7 +47,6 @@ def getfile(filename):
         file_name = each.split("/")[-1].split(".")[0]
         dataframe1 = pd.read_excel(each)
         col_name.append(dataframe1.columns.values)
-        print(col_name)
         print(col_name)
 
 def db_colname(pandas_colname):
@@ -142,16 +141,23 @@ def upload_file():
             # ............work her
             # parameters are filename and the global dataframe
             table_result = insert_into_table(file_name)
-            print(dataframe1)
+            #print(dataframe1)
             # insert_db(dataframe1)
             conn = database.connect()
             cursor = conn.cursor()
-            print(col_name)
-            for index, row in dataframe1.iterrows():
-                print(index)
-                print(row)
-            print(result)
+            # print(col_name)
+            # for index, row in dataframe1.iterrows():
+            #     print(index)
+            #     print(row)
+            # print(result)
+            dftest = dataframe1.iloc[:, 0:10]
+            print(dftest)
+            #print(dataframe1.iloc[:, :])
             # redirect(url_for('create_table', filename=filename))
+            with open(test_file, 'w') as f:
+                print("creating file here")
+                f.write(dftest.to_html(classes='df'))
+
             return render_template('home.html')
             #"File uploaded successfully"
             # redirect(url_for('uploaded_file', filename=filename))

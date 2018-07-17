@@ -17,21 +17,24 @@
                         <div id="emp_name">
                             {{ form.emp_name }}
                         </div>
-                        <div id="emp_organisation"
+                        <div id="emp_job_title"
                             class = "col-xs-12">
-                            {{ form.emp_organisation }}
+                            {{ form.emp_job_title }}
                         </div>
-                        <div  id="emp_designation">
-                            {{ form.emp_designation }}
+                        <div  id="emp_company_name">
+                            {{ form.emp_company_name }}
                         </div>
-                        <div id="emp_location">
-                            {{ form.emp_location }}
+                        <div id="emp_job_function">
+                            {{ form.emp_job_function }}
                         </div>
-                        <div  id="emp_linkedin">
-                                {{ form.emp_linkedin }}
+                        <div  id="emp_mgmt_level">
+                                {{ form.emp_mgmt_level }}
                         </div>
-                        <div id = "emp_decisionpower">
-                            {{ form.emp_decisionpower }}
+                        <div id = "emp_industry">
+                            {{ form.emp_industry }}
+                        </div>
+                        <div id = "emp_geography">
+                            {{ form.emp_geography }}
                         </div>
                         <div class="search-button">
                             <button
@@ -49,20 +52,7 @@
         </div>
 
             <div class="search-table-container">
-                <table id="contacts">
-                    <tr>
-                        <th>Company Name</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Job Title</th>
-                        <th>Email Address</th>
-                        <th>LinkedIn Profile</th>
-                        <th>Direct Phone</th>
-                        <th>Phone Number</th>
-                        <th>Compaby Website</th>
-                        <th>Company Description</th>
-                    </tr>
-                </table>
+                {% include "test.html" %}
             </div>
 
 <script src="{{url_for('static', filename='organisation.js')}}"></script>
