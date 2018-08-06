@@ -12,9 +12,9 @@ SQLALCHEMY_DATABASE_URI = 'postgresql://%(user)s:%(pw)s@%(host)s:%(port)s/%(db)s
 
 """
 
-MYSQL_DATABASE_USER = 'roopa'
-MYSQL_DATABASE_PASSWORD = 'password'
-MYSQL_DATABASE_DB = 'dbtest2'
+MYSQL_DATABASE_USER = 'root'
+MYSQL_DATABASE_PASSWORD = 'root'
+MYSQL_DATABASE_DB = 'salesdb'
 MYSQL_DATABASE_HOST = 'localhost'
 
 """

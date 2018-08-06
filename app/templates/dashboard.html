@@ -1,109 +1,227 @@
-{% extends 'base.html' %} {% block body %}
+{% extends 'base.html' %} {% block extra_styles %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/chosen.css')}}"> {% endblock %} {% block body %}
 <div class="wrapper">
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='_sidebar.css')}}">
+    <!-- <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='_sidebar.css')}}"> -->
+
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/dashboard.css')}}">
+
+    <!-- <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link> -->
     <!--{{ navdata }}-->
     {% include "nav.html" %}
 
     <!-- Page Content  -->
-    <div id="content">
-        <div class="row">
-            <div class="col">
+    <div class="main_container_wrapper">
+        <div id="content">
+            <div class="details">
+                <div class="row">
+                    <div class="float-left col">
+                        <span class="count-variable">{{orgCount}}</span>
+                        <span> Organizations</span>
+                    </div>
+                    <div class="float-right col">
+                        <span class="count-variable">{{empCount }}</span>
+                        <span> Employees</span>
+                    </div>
 
+                </div>
+            </div>
+            <div class="import-container">
+                <div class="row import-text">Upload your file here...
+                    <form action="/uploadtodb" method="POST" enctype="multipart/form-data">
+                        <input class="select-btn" type="file" name="file" />
+                        <input type="submit" />
+                    </form>
 
-                <div class="dashboard">
+                </div>
+            </div>
+            <hr>
+            <form action="{{ url_for('dash') }}" method="POST" id="search_form">
+                <input type="hidden" name="filter" id="url_downlaod" value="" />
+                <div class="row">
 
-                    <div class="details">
-                        16 Organizations
-                        <div class="left col-md-3">
-                            <button id="upload_org" type="submit" class="btn action">
-                                <i class="fas fa-plus"></i> Add</button>
+                    <div class="col-2 search-container">
+                        <div id="companyname">
+                            <input class="form-control" id="myInputcompanyname" name="filterOrg" type="text" placeholder="Company Name"> </div>
+                        <div id="industry">
+                            <!-- <input class="form-control" id="myInputindustry" type="text" placeholder="Industry">  -->
+                            <select class="my_select_box " id="industryList" name="filterIndustry" data-placeholder="Industry" multiple class="chosen-select">
+                            {% for industry in industryList %}
+                            <option class="form-control" value="{{industry}}">{{industry}}</option>
+                            {% endfor %}
+                        </select>
+                        </div>
+                        <div id="geography">
+                            <!--  <input class="form-control" id="myInputgeography" type="text" placeholder="Geography"> -->
+                            <select class="my_select_box " id="regionList" name="filterRegion" data-placeholder="Geography" multiple class="chosen-select">
+                            {% for geography in geographyList %}
+                            <option class="form-control" value="{{geography}}">{{geography}}</option>
+                            {% endfor %}
+                        </select>
+                        </div>
+                        <div id="revenue">
+                            <p>
+                                <label for="amount">Revenue(mn)</label>
+                                <!-- <input type="text" id="amount"  readonly style="border:0; color:#999; font-weight:bold;"> -->
+                            </p>
+
+                            <!-- <div id="slider-range"></div> -->
+
+                            <div class="row min-max" id="min_max">
+                                <div class="col-sm-6">
+                                    <input class="form-control" id="minVal" name="filterMinVal" type="text" placeholder="Min"> </div>
+                                <div class="col-sm-6">
+                                    <input class="form-control" id="maxVal" name="filterMaxVal" type="text" placeholder="Max"> </div>
+                            </div>
 
 
                         </div>
-
-                    </div>
-                </div>
-            </div>
-            <!--  <div class="col"></div> -->
-            <div class="float-right col">
-
-
-                <div class="dashboard">
-
-                    <div class="details">
-
-                        198 Contacts
-                        <div class="left col-md-3">
-                            <button id="upload_org" type="submit" class="btn action">
-                                <i class="fas fa-plus"></i> Import</button>
+                        <!--  <div class="row min-max" id="min_max">
+                        <div class="col-sm-6">
+                            <input class="form-control" id="minVal" name="filterMinVal" type="text" placeholder="Min"> </div>
+                        <div class="col-sm-6">
+                            <input class="form-control" id="maxVal" name="filterMaxVal" type="text" placeholder="Max"> </div>
+                    </div> -->
+                        <div id="tag">
+                            <input class="form-control" id="inputtag" type="text" placeholder="Tags"> </div>
+                        <!--  <div class="col-sm-4"  id="searchbar"><input class="form-control" id="myInput" type="text" placeholder="Search.."> </div> -->
 
 
+                        <div class="search-button">
+                            <span><button id="search-btn" type="submit" class="btn action">
+                            <i class="fas fa-search"></i>Search</button></span>
+                            <span><button id="clear-btn" type="submit" class="btn action">
+                            <i class="fas fa-undo-alt"></i>Clear</button></span>
                         </div>
                     </div>
+                    <div class="col-10 search-table-container" id="details-table">
+                        
+                        {% if recCount|length > 0 %}
+                        <table id="customers">
+                            <tr>
+                                <th>Name</th>
+                                <th>Revenue(mn)</th>
+                                <th>Employee count</th>
+                                <th>Region</th>
+                                <th>Industry</th>
+                            </tr>
+                            
+                            {% for org in recCount %}
+                            <tr>
+                                <td>
+                                    <a href="{{url_for('companyname', orgname =org.orgDetails.org_name)}}">{{org.orgDetails.org_name }}</a>
+                                </td>
+                                <td>{{org.orgDetails.org_revenue }}</td>
+                                <td>{{org.empPerOrgCount }}</td>
+                                <td>{{org.orgDetails.hq_city }}</td>
+                                <td>{{org.orgDetails.org_primaryindustry }}
+                                    <!--  <button id="edit_org" type="submit" class="btn action">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <button id="del_org" type="submit" class="btn action">
+                                <i class="fas fa-trash-alt"></i>
+                            </button> -->
+                                </td>
+                            </tr>{% endfor %}
+                             
+
+                        </table>
+                        {% else %}
+                             <p>No Search Results Found!!</p>
+                              {% endif %}
+                    </div>
+
                 </div>
-            </div>
+            </form>
+            <br>
 
         </div>
-        <hr>
-        <div class="row">
-<div class="search-container">
-            <div id="companyname"><input class="form-control" id="myInputcompanyname" type="text" placeholder="Company Name"> </div>
-            <div id="industry"><input class="form-control" id="myInputindustry" type="text" placeholder="Industry"> </div>
-            <div  id="geography"><input class="form-control" id="myInputgeography" type="text" placeholder="Geography"> </div>
-            <div id="revenue"><input class="form-control" id="myInputrevenue" type="text" placeholder="Revenue"> </div>
-            <div  id="tag"><input class="form-control" id="myInputtag" type="text" placeholder="Tags"> </div>
-            <!--  <div class="col-sm-4"  id="searchbar"><input class="form-control" id="myInput" type="text" placeholder="Search.."> </div> -->
-
-            
-            <div class="search-button">
-                <button id="upload_org" type="submit" class="btn action">
-        <i class="fas fa-search"></i>Search</button>
-            </div></div>
-            <div class="search-table-container">
-            <table id="customers">
-                <tr>
-                    <th>Name</th>
-                    <th>Revenue</th>
-                    <th>Employee count</th>
-                    <th>Region</th>
-                    <th>Industry</th>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="/companyname">RapidValue</a>
-                    </td>
-                    <td>100M</td>
-                    <td>500</td>
-                    <td>Kochi</td>
-                    <td>Information Technology
-                        <button id="edit_org" type="submit" class="btn action">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </button>
-                        <button id="del_org" type="submit" class="btn action">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>RapidValue</td>
-                    <td>10M</td>
-                    <td>200</td>
-                    <td>US</td>
-                    <td>Information Technology</td>
-                </tr>
-                <tr>
-                    <td>RapidValue3</td>
-                    <td>100M</td>
-                    <td>250</td>
-                    <td>Germany</td>
-                    <td>Information Technology</td>
-                </tr>
-            </table>
-        </div>
-
-        </div><br>
-        
     </div>
-</div>
-{% endblock %}
+
+    {% endblock %} {% block extra_js %}
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+    <!-- <script src = "https://code.jquery.com/jquery-1.10.2.js"></script> -->
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $.ajax({
+                url: '{{ url_for("getCompanyList") }}'
+            }).done(function(data) {
+                $('#myInputcompanyname').autocomplete({
+                    source: data
+                });
+            });
+
+
+
+            $.ajax({
+                url: '{{ url_for("getGeographyList") }}'
+            }).done(function(data) {
+                $('#myInputgeography').autocomplete({
+                    source: data
+                });
+            });
+        });
+
+
+        $(function() {
+            var minValue = {{revenue.minRevenue}};
+            var maxValue = {{revenue.maxRevenue}};
+            var stepSize = (maxValue + minValue) / 20;
+            $("#slider-range").slider({
+                range: true,
+                min: minValue,
+                max: maxValue,
+                values: [minValue, maxValue],
+                step: stepSize,
+                slide: function(event, ui) {
+                    $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+                }
+            });
+            $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+                " - $" + $("#slider-range").slider("values", 1));
+        });
+
+
+        $(document).ready(function() {
+            $("#search-btn").click(function() {
+                var minVal = $('#minVal').val();
+                var maxVal = $('#maxVal').val();
+                if (minVal.length <= 0) {
+                    minVal = 0;
+                }
+                if (maxVal.length <= 0) {
+                    maxVal = 0;
+                }
+                var dif = maxVal - minVal;
+                if (dif < 0) {
+                    alert("Maximum value cannot be less than minimum value!!")
+                } else {
+                    
+                    $("form #search_form").submit();
+                }
+                
+                $("#details-table").empty();
+                
+            });
+        });
+
+        $(document).ready(function(){
+            $("#clear-btn").click(function(){
+                // {{ url_for('dash') }} method="POST";
+            });
+        });
+    </script>
+
+    <script type="text/javascript" src="{{url_for('static', filename='chosen.jquery.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='chosen.proto.js')}}"></script>
+    <script type="text/javascript">
+        $(".my_select_box").chosen({
+            no_results_text: "Oops, nothing found!",
+            width: "100 %"
+        });
+    </script>
+    {% endblock %} // $.ajax({ // url: '{{ url_for("getRevenue") }}' // }).done(function (data){ // $('#myInputrevenue').autocomplete({ // source: data // }); // }); // $.ajax({ // url: '{{ url_for("getTags") }}' // }).done(function (data){ // $('#myInputtag').autocomplete({
+    // source: data // }); // });

@@ -1,3 +1,7 @@
+/*@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900";*/
+body{
+     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
 #customers {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -19,6 +23,28 @@
     text-align: left;
     background-color: #7386D5;
     color: white;
+}
+.chosen-container{
+    display: block;
+    width: 100%;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    /*border: 1px solid #ced4da !important;*/
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.chosen-choices{
+    padding: .25rem .75rem !important;
+    border: 1px solid #ced4da !important;
+    font-family: inherit;
+    border-radius: 0.25rem;
+    background-image: none !important;
+}
+.search-field{
+   font-family: inherit !important ;
 }
 
 .details{
@@ -50,12 +76,77 @@
 
 }
 .search-container{
-    width: 15%;
+    /*width: 15%;*/
 }
 .search-table-container{
-    width: 83%;
-    padding-left: 2%
+    /*width: 83%;*/
+    padding-left: 2%;
+        overflow-y: auto;
+    max-height: 430px;
+}
+.wrapper{
+    width: 100%;
+}
+.main_container_wrapper{
+    width: 93%;
 }
 .search-button #upload_org{
     width: 100%
+}
+.selectfile-container{
+    width: 60%;
+}
+.submit-container{
+    width: 40%
+}
+.import-container{
+   width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+}
+
+input.select-btn{
+    padding-left: 1rem;
+}
+.import-text{
+    padding-left: 1rem
+}
+.count-variable{
+    font-size: 3rem
+}
+
+
+.revenue_field{
+    display: block;
+    width: 100%;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    /*border: 1px solid #ced4da !important;*/
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.revenue_field{
+    padding: .25rem .75rem !important;
+    border: 1px solid #ced4da !important;
+    font-family: inherit;
+    border-radius: 0.25rem;
+    background-image: none !important;
+}
+.revenue_field{
+   font-family: inherit !important ;
+}
+
+.min-max{
+    padding-bottom: 1rem;
 }

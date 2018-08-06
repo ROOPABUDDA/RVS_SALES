@@ -1,4 +1,7 @@
-{% extends 'base.html' %} {% block body %}
+{% extends 'base.html' %} 
+{% block extra_styles %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/chosen.css')}}"> {% endblock %} 
+{% block body %}
 <div class="wrapper">
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='_sidebar.css')}}">
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/companyname.css')}}">
@@ -7,84 +10,151 @@
 
     <!-- Page Content  -->
     <div id="content">
-        <div class="col-sm-8">
-            <div class="col">
-                <div class=row>
-                    <div class="col">
-                        <h4>RapidValue</h4>
-                        <!-- <br> -->
-                        https://www.rapidvaluesolutions.com/
+        <!--  <div class="col">
+            <div class="col"> -->
+        <div class=row>
+            <div class="col-sm-6">
+                <h4>{{orgEmpDetails.orgDetails.org_name}}</h4>
+                <!-- <br> -->
+                {{orgEmpDetails.orgDetails.org_website}}
 
 
-                    </div>
-
-
-                </div>
             </div>
+            <div class="col-sm-3">
+                <span class="count-variable">{{orgEmpDetails.orgDetails.org_revenue}}</span>
+                <span>Millions </span>
+            </div>
+            <div class="col-sm-3">
+                <span class="count-variable">{{orgEmpDetails.totalEmpCount}}</span>
+                <span> Employees </span>
+            </div>
+
+
+
+
         </div>
+        <!--       </div>
+        </div> -->
         <hr>
         <div class="row">
-            <div class="col-sm-3">$X million </div>
-            <div class="col-sm-3">550 Employees</div>
-            <div class="col-sm-3">Key Contacts
-                <div class="row">
-                    <div class="col">
-                        <li>Rinish</li>
-                        <li>Sirish</li>
-                        <li>Rinish</li>
-                        <li>Sirish</li>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">Time required for response</div>
+
+            <!-- <div class="col-sm-3"><span class="count-variable">{{orgEmpDetails.orgDetails.org_revenue}}</span> <span>Millions </span> </div>
+            <div class="col-sm-3"><span class="count-variable">{{orgEmpDetails.totalEmpCount}}</span> <span> Employees </span> </div>
+
+            <div class="col-sm-3">Time required for response</div> -->
         </div>
 
-        <div>
-            <table id="customers">
-                <tr>
-                    <th>Name</th>
-                    <th>Organization</th>
-                    <th>Designation</th>
-                    <th>Location</th>
-                    <th>Decision Power</th>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="/companyname">Rinish</a>
-                    </td>
-                    <td>RapidValue</td>
-                    <td>CTO</td>
-                    <td>Kochi</td>
-                    <td>Yes
-                        <button id="edit_org" type="submit" class="btn action">
+        <div class="row">
+            <div class="search-container">
+                <div id="companyname">
+                    <input class="form-control" id="empName" type="text" placeholder="Name"> </div>
+                <div id="industry">
+                    <input class="form-control" id="jobTitle" type="text" placeholder="job Title"> </div>
+                <div id="geography">
+                    <!-- <input class="form-control" id="jobFunction" type="text" placeholder="job Function">  -->
+                         <select class="my_select_box " data-placeholder="Job Function" multiple class="chosen-select">
+                            {% for jobFunction in jobFunctions %}
+                            <option class="form-control" value="1">{{jobFunction}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                <div id="revenue">
+                    <input class="form-control" id="managementLevel" type="text" placeholder="Management Level"> </div>
+                <div id="tag">
+                    <input class="form-control" id="tag" type="text" placeholder="Tags"> </div>
+                <!--  <div class="col-sm-4"  id="searchbar"><input class="form-control" id="myInput" type="text" placeholder="Search.."> </div> -->
+
+
+                <div class="search-button">
+                    <button id="upload_org" type="submit" class="btn action">
+                        <i class="fas fa-search"></i>Search</button>
+                </div>
+            </div>
+
+
+
+            <div class="search-table-container">
+
+                <table id="customers">
+                    <tr>
+                        <th>Name</th>
+                        <th>Designation</th>
+                        <th>Email</th>
+                        <th>Linked-In</th>
+                        <th>Phone Number</th>
+                        <th>Direct Number</th>
+                        <!-- <th>Decision Power</th> -->
+                    </tr>
+                    {% for empDetail in orgEmpDetails.empDetails %}
+                    <tr>
+                        <td>
+                            <a href="/companyname">{{empDetail.first_name }} {{empDetail.last_name}}</a>
+                        </td>
+                        <td>{{empDetail.emp_designation}}</td>
+                        <td>{{empDetail.emp_mailid}}</td>
+                        <td>{{empDetail.emp_linkedin}}</td>
+                        <td>{{empDetail.emp_phonnumber}}</td>
+                        <td>{{empDetail.emp_directphone}}</td>
+                        <!-- <td>Yes -->
+                        <!--   <button id="edit_org" type="submit" class="btn action">
               <i class="fas fa-pencil-alt"></i>
             </button>
                         <button id="del_org" type="submit" class="btn action">
               <i class="fas fa-trash-alt"></i>
-            </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Sirish</td>
-                    <td>RapidVale</td>
-                    <td>CFO</td>
-                    <td>US</td>
-                    <td>Yes</td>
-                </tr>
-                <tr>
-                    <td>Rakesh</td>
-                    <td>RapidVale</td>
-                    <td>CEO</td>
-                    <td>Germany</td>
-                    <td>Yes</td>
-                </tr>
-            </table>
+            </button> -->
+                        <!--  </td> -->
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+                <br>
+                <div class="float-right col-md-3">
+                    <button id="upload_org" type="submit" class="btn action">
+                        <i class="fas fa-check"></i>Verify LinkedIn</button>
+                </div>
+            </div>
         </div>
-        <br>
-        <div class="float-right col-md-3">
-            <button id="upload_org" type="submit" class="btn action">
-        <i class="fas fa-check"></i>Verify LinkedIn</button>
-        </div>
+
     </div>
 </div>
 {% endblock %}
+
+ {% block extra_js %}
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+<!-- <script src = "https://code.jquery.com/jquery-1.10.2.js"></script> -->
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+
+ <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script type="text/javascript">
+        $(function() {
+        $.ajax({
+            url: '/getEmployeeNames/{{orgEmpDetails.orgDetails.org_name}}'
+            }).done(function (data){
+                $('#empName').autocomplete({
+                    source: data
+                });
+            });
+
+            $.ajax({
+            url: '/getEmpDesignation/{{orgEmpDetails.orgDetails.org_name}}'
+            }).done(function (data){
+                $('#jobTitle').autocomplete({
+                    source: data
+                });
+            });
+  
+
+        });
+</script>
+
+<script type="text/javascript" src="{{url_for('static', filename='chosen.jquery.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='chosen.proto.js')}}"></script>
+    <script type="text/javascript">
+        $(".my_select_box").chosen({
+            no_results_text: "Oops, nothing found!",
+            width: "100 %"
+        });
+    </script>
+ {% endblock %}
