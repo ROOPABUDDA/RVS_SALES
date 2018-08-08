@@ -191,6 +191,7 @@ def searchData(formData):
 	regionList = formData.getlist('filterRegion')
 	minRevenue = formData['filterMinVal']
 	maxRevenue = formData['filterMaxVal']
+	tags = formData['tags']
 	conditions = []
 	if orgName:
 		conditions.append(org.org_name.like("%" + orgName + "%") )
@@ -202,6 +203,8 @@ def searchData(formData):
 		conditions.append(org.org_revenue>=minRevenue)
 	if maxRevenue:
 		conditions.append(org.org_revenue<=maxRevenue)
+	if tags:
+		conditions.append(org.org_tag.like("%" + tags + "%") )
 	orgData = org.query.filter(and_(*conditions)).all()
 	orgIds = []
 	for orgID in orgData:

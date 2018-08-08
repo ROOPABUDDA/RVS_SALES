@@ -35,15 +35,14 @@
                 </div>
             </div>
             <hr>
-            <form action="{{ url_for('dash') }}" method="POST" id="search_form">
-                <input type="hidden" name="filter" id="url_downlaod" value="" />
+            <!-- <form action="{{ url_for('dash') }}" method="POST" id="search_form">
+                <input type="hidden" name="filter" id="url_downlaod" value="" /> -->
                 <div class="row">
 
-                    <div class="col-2 search-container">
+                    <!-- <div class="col-2 search-container">
                         <div id="companyname">
                             <input class="form-control" id="myInputcompanyname" name="filterOrg" type="text" placeholder="Company Name"> </div>
                         <div id="industry">
-                            <!-- <input class="form-control" id="myInputindustry" type="text" placeholder="Industry">  -->
                             <select class="my_select_box " id="industryList" name="filterIndustry" data-placeholder="Industry" multiple class="chosen-select">
                             {% for industry in industryList %}
                             <option class="form-control" value="{{industry}}">{{industry}}</option>
@@ -51,7 +50,6 @@
                         </select>
                         </div>
                         <div id="geography">
-                            <!--  <input class="form-control" id="myInputgeography" type="text" placeholder="Geography"> -->
                             <select class="my_select_box " id="regionList" name="filterRegion" data-placeholder="Geography" multiple class="chosen-select">
                             {% for geography in geographyList %}
                             <option class="form-control" value="{{geography}}">{{geography}}</option>
@@ -61,10 +59,7 @@
                         <div id="revenue">
                             <p>
                                 <label for="amount">Revenue(mn)</label>
-                                <!-- <input type="text" id="amount"  readonly style="border:0; color:#999; font-weight:bold;"> -->
                             </p>
-
-                            <!-- <div id="slider-range"></div> -->
 
                             <div class="row min-max" id="min_max">
                                 <div class="col-sm-6">
@@ -75,25 +70,18 @@
 
 
                         </div>
-                        <!--  <div class="row min-max" id="min_max">
-                        <div class="col-sm-6">
-                            <input class="form-control" id="minVal" name="filterMinVal" type="text" placeholder="Min"> </div>
-                        <div class="col-sm-6">
-                            <input class="form-control" id="maxVal" name="filterMaxVal" type="text" placeholder="Max"> </div>
-                    </div> -->
+                      
                         <div id="tag">
                             <input class="form-control" id="inputtag" type="text" placeholder="Tags"> </div>
-                        <!--  <div class="col-sm-4"  id="searchbar"><input class="form-control" id="myInput" type="text" placeholder="Search.."> </div> -->
-
-
+                        
                         <div class="search-button">
                             <span><button id="search-btn" type="submit" class="btn action">
                             <i class="fas fa-search"></i>Search</button></span>
                             <span><button id="clear-btn" type="submit" class="btn action">
                             <i class="fas fa-undo-alt"></i>Clear</button></span>
                         </div>
-                    </div>
-                    <div class="col-10 search-table-container" id="details-table">
+                    </div> -->
+                    <div class="col search-table-container" id="details-table">
                         
                         {% if recCount|length > 0 %}
                         <table id="customers">
@@ -131,7 +119,7 @@
                     </div>
 
                 </div>
-            </form>
+            <!-- </form> -->
             <br>
 
         </div>

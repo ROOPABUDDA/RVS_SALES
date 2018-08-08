@@ -1,120 +1,170 @@
-{% extends 'base.html' %} {% block body %}
+{% extends 'base.html' %} {% block extra_styles %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/chosen.css')}}"> {% endblock %} {% block body %}
 <div class="wrapper">
     <!--{{ navdata }}-->
     {% include "nav.html" %}
 
     <!-- Page Content  -->
     <div class="main_container_wrapper">
-    <form action="{{ url_for('download') }}" method="POST" id="download_form">
-    <input type="hidden" name="org_id"  id="url_downlaod" value="" />
-    <div id="content">
-        <div class="row count-container">
-            <div class="float-left col">
-                <span class="count-val">{{orgCount}} </span>
-                <span>Organizations</span>
-            </div>
-            <div class="float-right col-sm-2">
-                <form>
-                    <button id="downlaod-csv" type="submit" class="btn action">
-                        <i class="fas fa-download"></i> Downlaod</button>
-                </form>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-2 search-container">
-                <div id="companyname">
-                    <input class="form-control" id="myInputcompanyname" type="text" placeholder="Company Name"> </div>
-                <div id="industry">
-                    <input class="form-control" id="myInputindustry" type="text" placeholder="Industry"> </div>
-                <div id="geography">
-                    <input class="form-control" id="myInputgeography" type="text" placeholder="Geography"> </div>
-                <div id="revenue">
-                    <input class="form-control" id="myInputrevenue" type="text" placeholder="Revenue"> </div>
-                <div id="tag">
-                    <input class="form-control" id="myInputtag" type="text" placeholder="Tags"> </div>
-                <!--  <div class="col-sm-4"  id="searchbar"><input class="form-control" id="myInput" type="text" placeholder="Search.."> </div> -->
-
-
-                <div class="search-button">
-                    <button id="upload_org" type="submit" class="btn action">
-                        <i class="fas fa-search"></i>Search</button>
+        <form action="{{ url_for('download') }}" method="POST" id="download_form">
+            <input type="hidden" name="org_id" id="url_downlaod" value="" />
+            <div id="content">
+                <div class="row count-container">
+                    <div class="float-left col">
+                        <span class="count-val">{{orgCount}} </span>
+                        <span>Organizations</span>
+                    </div>
+                    <div class="float-right col-sm-2">
+                        <form>
+                            <button id="downlaod-csv" type="submit" class="btn action">
+                                <i class="fas fa-download"></i> Downlaod</button>
+                        </form>
+                    </div>
                 </div>
+                <hr>
+                <form action="{{ url_for('organisation') }}" method="POST" id="search_form">
+                    <input type="hidden" name="filter" id="url_downlaod" value="" />
+                    <div class="row">
+                        <div class="col-2 search-container">
+                            <div id="companyname">
+                                <input class="form-control" id="myInputcompanyname" name="filterOrg" type="text" placeholder="Company Name"> </div>
+                            <div id="industry">
+                                <!-- <input class="form-control" id="myInputindustry" type="text" placeholder="Industry">  -->
+                                <select class="my_select_box " id="industryList" name="filterIndustry" data-placeholder="Industry" multiple class="chosen-select">
+                                    {% for industry in industryList %}
+                                    <option class="form-control" value="{{industry}}">{{industry}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div id="geography">
+                                <!--  <input class="form-control" id="myInputgeography" type="text" placeholder="Geography"> -->
+                                <select class="my_select_box " id="regionList" name="filterRegion" data-placeholder="Geography" multiple class="chosen-select">
+                                    {% for geography in geographyList %}
+                                    <option class="form-control" value="{{geography}}">{{geography}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div id="revenue">
+                                <p>
+                                    <label for="amount">Revenue(mn)</label>
+                                    <!-- <input type="text" id="amount"  readonly style="border:0; color:#999; font-weight:bold;"> -->
+                                </p>
+
+                                <!-- <div id="slider-range"></div> -->
+
+                                <div class="row min-max" id="min_max">
+                                    <div class="col-sm-6">
+                                        <input class="form-control" id="minVal" name="filterMinVal" type="text" placeholder="Min"> </div>
+                                    <div class="col-sm-6">
+                                        <input class="form-control" id="maxVal" name="filterMaxVal" type="text" placeholder="Max"> </div>
+                                </div>
+
+
+                            </div>
+                            <!--  <div class="row min-max" id="min_max">
+                        <div class="col-sm-6">
+                            <input class="form-control" id="minVal" name="filterMinVal" type="text" placeholder="Min"> </div>
+                        <div class="col-sm-6">
+                            <input class="form-control" id="maxVal" name="filterMaxVal" type="text" placeholder="Max"> </div>
+                    </div> -->
+                            <div id="tag">
+                                <input class="form-control" id="inputtag" name="tags" type="text" placeholder="Tags"> </div>
+                            <!--  <div class="col-sm-4"  id="searchbar"><input class="form-control" id="myInput" type="text" placeholder="Search.."> </div> -->
+
+
+                            <div class="search-button">
+                                <span>
+                                    <button id="search-btn" type="submit" class="btn action">
+                                        <i class="fas fa-search"></i>Search</button>
+                                </span>
+                                <span>
+                                    <button id="clear-btn" type="submit" class="btn action">
+                                        <i class="fas fa-undo-alt"></i>Clear</button>
+                                </span>
+                            </div>
+                        </div>
+                        <!--  <div class="search-table-container"> -->
+                        <div class="col-10 scrollable-container">
+                            {% if recCount|length > 0 %}
+                            <table id="customers">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <label class="container">
+                                                <input type="checkbox" name="product_all" class="checked_all" />
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </th>
+                                        <th>Company Name</th>
+                                        <th>Company Website</th>
+                                        <th class="extra-padding">Company Description</th>
+                                        <th>Primary Industry</th>
+                                        <th>Secondary Industry</th>
+                                        <th>Revenue(mn)</th>
+                                        <th>IT Budget(mn)</th>
+                                        <th>HQ Address</th>
+                                        <th>HQ City</th>
+                                        <th>HQ State</th>
+                                        <th>Year (Founded)</th>
+                                        <th>Technologies</th>
+                                        <th>Related Case Study</th>
+                                        <th>Tag</th>
+                                        <!-- <th>Decision Power</th> -->
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for org in recCount %}
+                                    <tr>
+                                        <td>
+                                            <label class="container">
+                                                <input type="checkbox" class="checkbox click" value={{org.orgDetails.org_id}} />
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <a href="{{url_for('companyname', orgname =org.orgDetails.org_name)}}">{{org.orgDetails.org_name }}</a>
+                                        </td>
+                                        <td>{{org.orgDetails.org_website }}</td>
+                                        <td>{{org.orgDetails.org_description }}</td>
+                                        <td>{{org.orgDetails.org_primaryindustry }}</td>
+                                        <td>{{org.orgDetails.org_secondaryindustry }}</td>
+                                        <td>{{org.orgDetails.org_revenue }}</td>
+                                        <td>{{org.orgDetails.itbudget }}</td>
+                                        <td>{{org.orgDetails.hq_address }}</td>
+                                        <td>{{org.orgDetails.hq_city }}</td>
+                                        <td>{{org.orgDetails.hq_state }}</td>
+                                        <td>{{org.orgDetails.year_founded }}</td>
+                                        <td>{{org.orgDetails.org_technologies }}</td>
+                                        <td>{{org.orgDetails.related_case_study }}</td>
+                                        <td>{{org.orgDetails.org_tag }}</td>
+
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+
+
+                            </table>
+                            {% else %}
+                            <p>No Search Results Found!!</p>
+                            {% endif %}
+                            <br>
+
+                        </div>
+                        <!-- </div> -->
+                    </div>
+                </form>
+
+
+
             </div>
-           <!--  <div class="search-table-container"> -->
-                <div class="col-10 scrollable-container">
-                <table id="customers">
-                    <thead>
-                        <tr>
-                            <th>
-                                <label class="container">
-                                    <input type="checkbox" name="product_all" class="checked_all" />
-                                    <span class="checkmark"></span>
-                                </label>
-                            </th>
-                            <th>Company Name</th>
-                            <th>Company Website</th>
-                            <th class="extra-padding">Company Description</th>
-                            <th>Primary Industry</th>
-                            <th>Secondary Industry</th>
-                            <th>Revenue(mn)</th>
-                            <th>IT Budget(mn)</th>
-                            <th>HQ Address</th>
-                            <th>HQ City</th>
-                            <th>HQ State</th>
-                            <th>Year (Founded)</th>
-                            <th>Technologies</th>
-                            <th>Related Case Study</th>
-                            <th>Tag</th>
-                            <!-- <th>Decision Power</th> -->
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {% for org in recCount %}
-                        <tr>
-                            <td>
-                                <label class="container">
-                                    <input type="checkbox" class="checkbox click" value={{org.orgDetails.org_id}} />
-                                    <span class="checkmark"></span>
-                                </label>
-                            </td>
-                            <td>
-                                <a href="{{url_for('companyname', orgname =org.orgDetails.org_name)}}">{{org.orgDetails.org_name }}</a>
-                            </td>
-                            <td>{{org.orgDetails.org_website }}</td>
-                            <td>{{org.orgDetails.org_description }}</td>
-                            <td>{{org.orgDetails.org_primaryindustry }}</td>
-                            <td>{{org.orgDetails.org_secondaryindustry }}</td>
-                            <td>{{org.orgDetails.org_revenue }}</td>
-                            <td>{{org.orgDetails.itbudget }}</td>
-                            <td>{{org.orgDetails.hq_address }}</td>
-                            <td>{{org.orgDetails.hq_city }}</td>
-                            <td>{{org.orgDetails.hq_state }}</td>
-                            <td>{{org.orgDetails.year_founded }}</td>
-                            <td>{{org.orgDetails.org_technologies }}</td>
-                            <td>{{org.orgDetails.related_case_study }}</td>
-                            <td>{{org.orgDetails.org_tag }}</td>
-
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-
-
-                </table>
-                <br>
-
-            </div><!-- </div> -->
-        </div>
-
-
-
-    </div></form>
-</div>
+        </form>
+    </div>
 </div>
 
 <!--script src="{{ url_for('static', filename='js/resources/file.js') }}"></script-->
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
 <script type="text/javascript">
     $('.checked_all').on('change', function() {
         $('.checkbox').prop('checked', $(this).prop("checked"));
@@ -156,45 +206,72 @@
     });
 </script>
 
-{% endblock %}
-
-
- {% block extra_js %}
+{% endblock %} {% block extra_js %}
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
 <!-- <script src = "https://code.jquery.com/jquery-1.10.2.js"></script> -->
 <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
 
- <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
-<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script type="text/javascript">
-        $(function() {
+    $(function() {
         $.ajax({
             url: '{{ url_for("getCompanyList") }}'
-            }).done(function (data){
-                $('#myInputcompanyname').autocomplete({
-                    source: data
-                });
+        }).done(function(data) {
+            $('#myInputcompanyname').autocomplete({
+                source: data
             });
-
-
-            $.ajax({
-            url: '{{ url_for("getIndustryList") }}'
-            }).done(function (data){
-                $('#myInputindustry').autocomplete({
-                    source: data
-                });
-            });
-
-             $.ajax({
-            url: '{{ url_for("getGeographyList") }}'
-            }).done(function (data){
-                $('#myInputgeography').autocomplete({
-                    source: data
-                });
-            });
-
-            
-
         });
+
+
+
+        $.ajax({
+            url: '{{ url_for("getGeographyList") }}'
+        }).done(function(data) {
+            $('#myInputgeography').autocomplete({
+                source: data
+            });
+        });
+
+
+        $(document).ready(function() {
+            $("#search-btn").click(function() {
+                var minVal = $('#minVal').val();
+                var maxVal = $('#maxVal').val();
+                if (minVal.length <= 0) {
+                    minVal = 0;
+                }
+                if (maxVal.length <= 0) {
+                    maxVal = 0;
+                }
+                var dif = maxVal - minVal;
+                if (dif < 0) {
+                    alert("Maximum value cannot be less than minimum value!!")
+                } else {
+
+                    $("form #search_form").submit();
+                }
+
+                $("#details-table").empty();
+
+            });
+        });
+
+        $(document).ready(function() {
+            $("#clear-btn").click(function() {
+                // {{ url_for('dash') }} method="POST";
+            });
+        });
+
+    });
 </script>
- {% endblock %}
+
+<script type="text/javascript" src="{{url_for('static', filename='chosen.jquery.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='chosen.proto.js')}}"></script>
+<script type="text/javascript">
+    $(".my_select_box").chosen({
+        no_results_text: "Oops, nothing found!",
+        width: "100 %"
+    });
+</script>
+{% endblock %}

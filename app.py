@@ -20,6 +20,12 @@ import json
 # import StringIO 
 # from app.main.company import getOrgEmpDetails
 
+from flask.ext.login import LoginManager, login_required, login_user, \
+    logout_user, current_user, UserMixin
+from requests_oauthlib import OAuth2Session
+from requests.exceptions import HTTPError
+
+
 template_dir = os.path.abspath('app/templates')
 static_path = os.path.abspath('app/static')
 UPLOAD_FOLDER = 'D:/Python/Projects/RVS_Sales_CRM/uploads'
@@ -180,7 +186,6 @@ def dash():
         geographyList.append(geography.hq_country)
     uniqueCountryList = list(set(geographyList))
     revenue = getMaxAndMinRevenue()
-    print('request.method',request.method)
     if request.method == 'POST':
         formData = request.form
         searchRes = searchData(formData)
@@ -191,8 +196,6 @@ def dash():
         else:
             print('ppppppp',searchRes)
             OrgDetails = searchRes
-    
-
     return render_template("dashboard.html", recCount  = OrgDetails,
         orgCount = orgCount,empCount =empCount,
         industryList=uniqueIndustryList ,geographyList = uniqueCountryList, 
@@ -206,10 +209,33 @@ def logout():
 
 
 
-@app.route('/organisation')
+@app.route('/organisation',methods = ['GET', 'POST'])
 def organisation():
-    getcount, orgCount, empCount = getOrgAndEmpCount()
-    return render_template('organisation.html', recCount  = getcount,orgCount = orgCount,empCount =empCount)
+    OrgDetails, orgCount, empCount = getOrgAndEmpCount()
+    orgDetails = orgData()
+    IndustryList = []
+    for industry in orgDetails:
+        IndustryList.append(industry.org_primaryindustry)
+    uniqueIndustryList = list(set(IndustryList))
+    geographyList = []
+    for geography in orgDetails:
+        geographyList.append(geography.hq_country)
+    uniqueCountryList = list(set(geographyList))
+    revenue = getMaxAndMinRevenue()
+    if request.method == 'POST':
+        formData = request.form
+        print('org form---------------',formData)
+        searchRes = searchData(formData)
+        print(type(searchRes))
+        if len(searchRes) == 0:
+            print("No result found!!")
+            OrgDetails = searchRes
+        else:
+            print('ppppppp',searchRes)
+            OrgDetails = searchRes
+
+    return render_template('organisation.html', recCount  = OrgDetails,orgCount = orgCount,empCount =empCount,
+        industryList=uniqueIndustryList,geographyList = uniqueCountryList)
 
 
 @app.route('/download' , methods=['POST'])
@@ -308,5 +334,5 @@ def getEmpDesignation(companyname):
 
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
-    # app.run(debug=True,host='0.0.0.0', port=4000)
-    app.run(debug=True)
+    app.run(debug=True,host='0.0.0.0', port=4000)
+    # app.run(debug=True)
