@@ -13,7 +13,7 @@ from pandas import ExcelWriter
 from pandas import ExcelFile
 from flask.ext.sqlalchemy import SQLAlchemy
 from models import create_sqlalchemy
-from models import insert_into_db,getOrgAndEmpCount,getOrgEmpDetails,getOrgDetails,writeToCSV,orgData,empData,getMaxAndMinRevenue,searchData
+from models import insert_into_db,getOrgAndEmpCount,getOrgEmpDetails,getOrgDetails,writeToCSV,orgData,empData,getMaxAndMinRevenue,searchData,searchEmp
 from flask import Flask, make_response 
 import csv
 import json
@@ -264,7 +264,7 @@ def contacts():
 def analytics():
     return render_template('analytics.html')
 
-@app.route('/companyname/?name:<orgname>')
+@app.route('/companyname/?name:<orgname>',methods = ['GET', 'POST'])
 def companyname(orgname):
     orgEmpDetails = getOrgEmpDetails(orgname)
     jobFunctions = empData(orgname)
@@ -272,6 +272,20 @@ def companyname(orgname):
     for jobFunction in jobFunctions:
         jobFunctionList.append(jobFunction.emp_designation)
     uniqueJobFunctionList = list(set(jobFunctionList))
+    if request.method == 'POST':
+        formData = request.form
+        print('org form---------------',formData)
+        empSearchRes = searchEmp(formData, orgname)
+        print('org form---------------',empSearchRes)
+        if  len(empSearchRes) == 0:
+            print("No result found")
+            orgEmpDetails['empDetails'] = empSearchRes
+            print('no result query res', orgEmpDetails)
+        else:
+            orgEmpDetails['empDetails'] = empSearchRes
+            print('resut found', orgEmpDetails)
+
+
     return render_template('companyname.html' , orgEmpDetails = orgEmpDetails, jobFunctions = jobFunctionList)
 
 @app.route('/getCompanyList')

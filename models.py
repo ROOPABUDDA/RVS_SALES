@@ -222,6 +222,26 @@ def searchData(formData):
 	print('xxxxxxxxxxxxxxxxxx',org_dict)
 	return org_dict
 		
+def searchEmp(formData, orgname):
+	empName = formData['empName']
+	jobRole = formData['jobRole']
+	print(jobRole)
+	orgData =org.query.filter_by(org_name=orgname).first()
+	orgId = orgData.org_id
+	conditions = []
+	if orgId:
+		conditions.append(employeecontact.emp_org_id == orgId)
+	if empName:
+		conditions.append(employeecontact.first_name.like("%" + empName + "%") )
+	if jobRole:
+		conditions.append(employeecontact.emp_designation.like(jobRole))
+	empData = employeecontact.query.filter(and_(*conditions)).all()
+	print('---------->empwwwwwwwwwwwwwwwwwwwwwwwwwwwppp', empData)
+	return empData
+
+
+
+
     	
 
     	
