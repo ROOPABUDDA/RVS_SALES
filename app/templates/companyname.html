@@ -1,7 +1,5 @@
-{% extends 'base.html' %} 
-{% block extra_styles %}
-<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/chosen.css')}}"> {% endblock %} 
-{% block body %}
+{% extends 'base.html' %} {% block extra_styles %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/chosen.css')}}"> {% endblock %} {% block body %}
 <div class="wrapper">
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='_sidebar.css')}}">
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/companyname.css')}}">
@@ -43,135 +41,138 @@
 
             <div class="col-sm-3">Time required for response</div> -->
         </div>
-<form action="{{ url_for('companyname', orgname =orgEmpDetails.orgDetails.org_name) }}" method="POST" id="search_form">
-                <input type="hidden" name="filter" id="url_downlaod" value="" />
-        <div class="row">
-            <div class="search-container">
-                <div id="companyname">
-                    <input class="form-control" id="empName" name="empName" type="text" placeholder="Name"> </div>
-                <div id="industry">
-                    <input class="form-control" id="jobTitle" name="jobRole" type="text" placeholder="job Title"> </div>
-                <div id="geography">
-                    <!-- <input class="form-control" id="jobFunction" type="text" placeholder="job Function">  -->
-                         <select class="my_select_box " data-placeholder="Job Function" multiple class="chosen-select">
+        <form action="{{ url_for('companyname', orgname =orgEmpDetails.orgDetails.org_name) }}" method="POST" id="search_form">
+            <input type="hidden" name="filter" id="url_downlaod" value="" />
+            <div class="row">
+                <div class="search-container">
+                    <div id="companyname">
+                        <input class="form-control" id="empName" name="empName" type="text" placeholder="Name"> </div>
+                    <div id="industry">
+                        <input class="form-control" id="jobTitle" name="jobRole" type="text" placeholder="job Title"> </div>
+                    <div id="geography">
+                        <!-- <input class="form-control" id="jobFunction" type="text" placeholder="job Function">  -->
+                        <select class="my_select_box " data-placeholder="Job Function" multiple class="chosen-select">
                             {% for jobFunction in jobFunctions %}
                             <option class="form-control" value="1">{{jobFunction}}</option>
                             {% endfor %}
                         </select>
                     </div>
-                <div id="managementRole">
-                    <input class="form-control" id="managementLevel" type="text" placeholder="Management Level"> </div>
-                <div id="tag">
-                    <input class="form-control" id="tag" type="text" placeholder="Tags"> </div>
-                <!--  <div class="col-sm-4"  id="searchbar"><input class="form-control" id="myInput" type="text" placeholder="Search.."> </div> -->
+                    <div id="managementRole">
+                        <input class="form-control" id="managementLevel" type="text" placeholder="Management Level"> </div>
+                    <div id="tag">
+                        <input class="form-control" id="tag" type="text" placeholder="Tags"> </div>
+                    <!--  <div class="col-sm-4"  id="searchbar"><input class="form-control" id="myInput" type="text" placeholder="Search.."> </div> -->
 
 
-                <div class="search-button">
-                            <span><button id="search-btn" type="submit" class="btn action">
-                            <i class="fas fa-search"></i>Search</button></span>
-                            <span><button id="clear-btn" type="submit" class="btn action">
-                            <i class="fas fa-undo-alt"></i>Clear</button></span>
-                        </div>
-            </div>
+                    <div class="search-button">
+                        <span>
+                            <button id="search-btn" type="submit" class="btn action">
+                                <i class="fas fa-search"></i>Search</button>
+                        </span>
+                        <span>
+                            <button id="clear-btn" type="submit" class="btn action">
+                                <i class="fas fa-undo-alt"></i>Clear</button>
+                        </span>
+                    </div>
+                </div>
 
 
 
-            <div class="search-table-container">
-                {% if orgEmpDetails.empDetails|length > 0 %}
-                <table id="customers">
-                    <tr>
-                        <th>Name</th>
-                        <th>Designation</th>
-                        <th>Email</th>
-                        <th>Linked-In</th>
-                        <th>Phone Number</th>
-                        <th>Direct Number</th>
-                        <!-- <th>Decision Power</th> -->
-                    </tr>
-                    {% for empDetail in orgEmpDetails.empDetails %}
-                    <tr>
-                        <td>
-                            <a href="/companyname">{{empDetail.first_name }} {{empDetail.last_name}}</a>
-                        </td>
-                        <td>{{empDetail.emp_designation}}</td>
-                        <td>{{empDetail.emp_mailid}}</td>
-                        <td>{{empDetail.emp_linkedin}}</td>
-                        <td>{{empDetail.emp_phonnumber}}</td>
-                        <td>{{empDetail.emp_directphone}}</td>
-                        <!-- <td>Yes -->
-                        <!--   <button id="edit_org" type="submit" class="btn action">
+                <div class="search-table-container">
+                    {% if orgEmpDetails.empDetails|length > 0 %}
+                    <table id="customers">
+                        <tr>
+                            <th>Name</th>
+                            <th>Designation</th>
+                            <th>Email</th>
+                            <th>Linked-In</th>
+                            <th>Phone Number</th>
+                            <th>Direct Number</th>
+                            <!-- <th>Decision Power</th> -->
+                        </tr>
+                        {% for empDetail in orgEmpDetails.empDetails %}
+                        <tr>
+                            <td>
+                                <a href="/companyname">{{empDetail.first_name }} {{empDetail.last_name}}</a>
+                            </td>
+                            <td>{{empDetail.emp_designation}}</td>
+                            <td>{{empDetail.emp_mailid}}</td>
+                            <td>{{empDetail.emp_linkedin}}</td>
+                            <td>{{empDetail.emp_phonnumber}}</td>
+                            <td>{{empDetail.emp_directphone}}</td>
+                            <!-- <td>Yes -->
+                            <!--   <button id="edit_org" type="submit" class="btn action">
               <i class="fas fa-pencil-alt"></i>
             </button>
                         <button id="del_org" type="submit" class="btn action">
               <i class="fas fa-trash-alt"></i>
             </button> -->
-                        <!--  </td> -->
-                    </tr>
+                            <!--  </td> -->
+                        </tr>
 
-                    {% endfor %}
+                        {% endfor %}
 
-                </table>
-                {% else %}
-                             <p>No Search Results Found!!</p>
-                              {% endif %}
-                <br>
-                <div class="float-right col-md-3">
-                    <button id="upload_org" type="submit" class="btn action">
-                        <i class="fas fa-check"></i>Verify LinkedIn</button>
+                    </table>
+                    {% else %}
+                    <p>No Search Results Found!!</p>
+                    {% endif %}
+                    <br>
+                    <div class="float-right col-md-3">
+                        <button id="upload_org" type="submit" class="btn action">
+                            <i class="fas fa-check"></i>Verify LinkedIn</button>
+                    </div>
                 </div>
             </div>
-        </div></form>
+        </form>
 
     </div>
 </div>
-{% endblock %}
-
- {% block extra_js %}
+{% endblock %} {% block extra_js %}
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
 <!-- <script src = "https://code.jquery.com/jquery-1.10.2.js"></script> -->
 <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
 
- <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
-<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script type="text/javascript">
-        $(function() {
+    $(function() {
         $.ajax({
             url: '/getEmployeeNames/{{orgEmpDetails.orgDetails.org_name}}'
-            }).done(function (data){
-                $('#empName').autocomplete({
-                    source: data
-                });
+        }).done(function(data) {
+            $('#empName').autocomplete({
+                source: data
             });
+        });
 
-            $.ajax({
+        $.ajax({
             url: '/getEmpDesignation/{{orgEmpDetails.orgDetails.org_name}}'
-            }).done(function (data){
-                $('#jobTitle').autocomplete({
-                    source: data
-                });
-            });
-  
-
-        });
-
-        $(document).ready(function() {
-            $("#search-btn").click(function() {
-                
-                    
-                $("form #search_form").submit();
-               
-                $("#details-table").empty();
-                
+        }).done(function(data) {
+            $('#jobTitle').autocomplete({
+                source: data
             });
         });
+
+
+    });
+
+    $(document).ready(function() {
+        $("#search-btn").click(function() {
+
+
+            $("form #search_form").submit();
+
+            $("#details-table").empty();
+
+        });
+    });
 </script>
 
 <script type="text/javascript" src="{{url_for('static', filename='chosen.jquery.js')}}"></script>
-    <script type="text/javascript" src="{{url_for('static', filename='chosen.proto.js')}}"></script>
-    <script type="text/javascript">
-        $(".my_select_box").chosen({
-            no_results_text: "Oops, nothing found!",
-            width: "100 %"
-        });
-    </script>
- {% endblock %}
+<script type="text/javascript" src="{{url_for('static', filename='chosen.proto.js')}}"></script>
+<script type="text/javascript">
+    $(".my_select_box").chosen({
+        no_results_text: "Oops, nothing found!",
+        width: "100 %"
+    });
+</script>
+{% endblock %}

@@ -13,7 +13,7 @@
     <div class="main_container_wrapper">
         <div id="content">
             <div class="details">
-               <!--  <div class="row">
+                <!--  <div class="row">
                     <div class="float-left col">
                         <span class="count-variable">{{orgCount}}</span>
                         <span> Organizations</span>
@@ -37,9 +37,9 @@
             <hr>
             <!-- <form action="{{ url_for('dash') }}" method="POST" id="search_form">
                 <input type="hidden" name="filter" id="url_downlaod" value="" /> -->
-                <div class="row">
+            <div class="row">
 
-                    <!-- <div class="col-2 search-container">
+                <!-- <div class="col-2 search-container">
                         <div id="companyname">
                             <input class="form-control" id="myInputcompanyname" name="filterOrg" type="text" placeholder="Company Name"> </div>
                         <div id="industry">
@@ -81,44 +81,44 @@
                             <i class="fas fa-undo-alt"></i>Clear</button></span>
                         </div>
                     </div> -->
-                    <div class="col search-table-container" id="details-table">
-                        
-                        {% if recCount|length > 0 %}
-                        <table id="customers">
-                            <tr>
-                                <th>Name</th>
-                                <th>Revenue(mn)</th>
-                                <th>Employee count</th>
-                                <th>Region</th>
-                                <th>Industry</th>
-                            </tr>
-                            
-                            {% for org in recCount %}
-                            <tr>
-                                <td>
-                                    <a href="{{url_for('companyname', orgname =org.orgDetails.org_name)}}">{{org.orgDetails.org_name }}</a>
-                                </td>
-                                <td>{{org.orgDetails.org_revenue }}</td>
-                                <td>{{org.empPerOrgCount }}</td>
-                                <td>{{org.orgDetails.hq_city }}</td>
-                                <td>{{org.orgDetails.org_primaryindustry }}
-                                    <!--  <button id="edit_org" type="submit" class="btn action">
+                <div class="col search-table-container" id="details-table">
+
+                    {% if recCount|length > 0 %}
+                    <table id="customers">
+                        <tr>
+                            <th>Name</th>
+                            <th>Revenue(mn)</th>
+                            <th>Employee count</th>
+                            <th>Region</th>
+                            <th>Industry</th>
+                        </tr>
+
+                        {% for org in recCount %}
+                        <tr>
+                            <td>
+                                <a href="{{url_for('companyname', orgname =org.orgDetails.org_name)}}">{{org.orgDetails.org_name }}</a>
+                            </td>
+                            <td>{{org.orgDetails.org_revenue }}</td>
+                            <td>{{org.empPerOrgCount }}</td>
+                            <td>{{org.orgDetails.hq_city }}</td>
+                            <td>{{org.orgDetails.org_primaryindustry }}
+                                <!--  <button id="edit_org" type="submit" class="btn action">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
                             <button id="del_org" type="submit" class="btn action">
                                 <i class="fas fa-trash-alt"></i>
                             </button> -->
-                                </td>
-                            </tr>{% endfor %}
-                             
+                            </td>
+                        </tr>{% endfor %}
 
-                        </table>
-                        {% else %}
-                             <p>No Search Results Found!!</p>
-                              {% endif %}
-                    </div>
 
+                    </table>
+                    {% else %}
+                    <p>No Search Results Found!!</p>
+                    {% endif %}
                 </div>
+
+            </div>
             <!-- </form> -->
             <br>
 
@@ -155,8 +155,16 @@
 
 
         $(function() {
-            var minValue = {{revenue.minRevenue}};
-            var maxValue = {{revenue.maxRevenue}};
+            var minValue = {
+                {
+                    revenue.minRevenue
+                }
+            };
+            var maxValue = {
+                {
+                    revenue.maxRevenue
+                }
+            };
             var stepSize = (maxValue + minValue) / 20;
             $("#slider-range").slider({
                 range: true,
@@ -187,17 +195,17 @@
                 if (dif < 0) {
                     alert("Maximum value cannot be less than minimum value!!")
                 } else {
-                    
+
                     $("form #search_form").submit();
                 }
-                
+
                 $("#details-table").empty();
-                
+
             });
         });
 
-        $(document).ready(function(){
-            $("#clear-btn").click(function(){
+        $(document).ready(function() {
+            $("#clear-btn").click(function() {
                 // {{ url_for('dash') }} method="POST";
             });
         });
